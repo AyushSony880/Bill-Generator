@@ -5,8 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import MonthYearPicker from "@/components/ui/MonthYearPicker";
-import "react-datepicker/dist/react-datepicker.css"; // best place for CSS
+import MonthYearPicker from "../common/MonthYearPicker.jsx";
 const GenerateBill = () => {
   return (
     <div className="bg-[#ffffff] rounded-lg shadow-sm w-[70%] h-full p-6">
