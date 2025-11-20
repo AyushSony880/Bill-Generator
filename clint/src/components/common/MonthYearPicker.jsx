@@ -39,7 +39,7 @@ export default function MonthYearPicker({ onChange }) {
           handleChange(Number(value), year);
         }}
       >
-        <SelectTrigger className="w-[200px]">
+        <SelectTrigger className="w-[150px]">
           <SelectValue placeholder="Select Month" />
         </SelectTrigger>
 
@@ -68,7 +68,7 @@ export default function MonthYearPicker({ onChange }) {
           handleChange(month, Number(value));
         }}
       >
-        <SelectTrigger className="w-[200px]">
+        <SelectTrigger className="w-[150px]">
           <SelectValue placeholder="Select Year" />
         </SelectTrigger>
 
