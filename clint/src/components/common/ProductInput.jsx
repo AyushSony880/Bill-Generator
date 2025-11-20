@@ -17,12 +17,12 @@ const ProductInput = () => {
           placeholder="Product name"
         />
         <input
-          className=" border rounded-md w-64 px-2"
+          className=" border rounded-md w-24 px-2"
           type="number"
           placeholder="Price"
         />
         <Select defaultValue="kg">
-          <SelectTrigger className="w-[300px] ">
+          <SelectTrigger className="w-24 ">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -30,6 +30,16 @@ const ProductInput = () => {
             <SelectItem value="ltr">ltr</SelectItem>
           </SelectContent>
         </Select>
+        <input
+          className=" border rounded-md w-42 px-2"
+          type="number"
+          placeholder="WPS in gms(1to5)"
+        />
+        <input
+          className=" border rounded-md w-42 px-2"
+          type="number"
+          placeholder="WPS in gms(6to8)"
+        />
       </div>
       <div className="flex items-center justify-start my-8 gap-x-5">
         <Button value={"Add"} color={"bg-indigo-600"} />
