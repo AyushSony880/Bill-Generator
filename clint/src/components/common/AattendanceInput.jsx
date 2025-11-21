@@ -6,8 +6,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import MonthYearPicker from "./MonthYearPicker";
+import { useContext } from "react";
+import { dataContext } from "../../context/Context";
 
 const AattendanceInput = () => {
+  const { name } = useContext(dataContext)
+  console.log(name);
+  
   return (
     <div>
       <section className=" flex items-center justify-start gap-5">
