@@ -38,7 +38,7 @@ const SideNav = () => {
           }
           to="/enter-Data"
         >
-          Student Entry
+          Monthly record
         </NavLink>
       </nav>
     </div>

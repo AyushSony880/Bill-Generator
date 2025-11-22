@@ -8,7 +8,7 @@ const EnterData = () => {
 
   return (
     <div className="bg-[#ffffff] rounded-lg shadow-sm w-[70%]  p-6">
-      <h1 className="text-xl font-semibold py-5">Monthly record Table</h1>
+      <h1 className="text-xl font-semibold py-5">Monthly record </h1>
       <AattendanceInput />
       <section className="mt-5 p-5 border-t-2">
         {Array.isArray(record) && record.length > 0 ? (

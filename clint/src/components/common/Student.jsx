@@ -1,5 +1,4 @@
-import React from "react";
-import Button from "./Button";
+
 
 const Student = ({ year, stu_6to8, stu_1to5, school, month }) => {
   return (
@@ -20,8 +19,17 @@ const Student = ({ year, stu_6to8, stu_1to5, school, month }) => {
           </p>{" "}
         </div>
       </div>
-      <Button value={"Edit"} color={"bg-green-600"} />
-      <Button value={"Generate Bill"} color={"bg-indigo-600"} />
+        <button
+        className={`px-4 py-2 bg-green-600 text-white rounded  cursor-pointer`}
+      >
+        Edit
+      </button>
+        <button
+        className={`px-4 py-2 bg-indigo-600 text-white rounded  cursor-pointer`}
+      >
+        Generate Bill
+      </button>
+      
     </div>
   );
 };

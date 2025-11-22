@@ -1,7 +1,7 @@
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GenerateBill from "./components/pages/GenerateBill";
-import EnterData from "./components/pages/EnterData";
+import EnterData from "./components/pages/MonthlyRecord";
 import ManageSchools from "./components/pages/ManageSchools";
 import MangeProduct from "./components/pages/MangeProduct";
 import AppLayout from "./components/layout/AppLayout";

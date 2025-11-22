@@ -1,17 +1,14 @@
-import React from "react";
-import Button from "./Button";
+
 import { useSchool } from "../../context/SchoolContext.jsx";
 import { toast } from "react-toastify";
 
 const SchoolInput = () => {
   const { newSchool, setNewSchool, addSchoolData } = useSchool();
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await addSchoolData();
     if (!result.success) {
-
       toast.error(result.message);
     } else {
       toast.success("Saved successfully!");
@@ -42,8 +39,11 @@ const SchoolInput = () => {
           setNewSchool({ ...newSchool, address: e.target.value })
         }
       />
-
-      <Button value={"Add"} color={"bg-indigo-600"} />
+      <button
+        className={`px-4 py-2 bg-indigo-600 text-white rounded  cursor-pointer`}
+      >
+        Add
+      </button>
     </form>
   );
 };

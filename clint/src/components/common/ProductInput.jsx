@@ -5,7 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Button from "./Button";
 
 const ProductInput = () => {
   return (
@@ -42,8 +41,16 @@ const ProductInput = () => {
         />
       </div>
       <div className="flex items-center justify-start my-8 gap-x-5">
-        <Button value={"Add"} color={"bg-indigo-600"} />
-        <Button value={"Cancel"} color={"bg-red-600"} />
+        <button
+          className={`px-4 py-2 bg-indigo-600 text-white rounded  cursor-pointer`}
+        >
+          Add
+        </button>
+        <button
+          className={`px-4 py-2 bg-red-600 text-white rounded  cursor-pointer`}
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );

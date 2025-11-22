@@ -1,6 +1,3 @@
-import React from "react";
-import Button from "./Button";
-
 const Item = ({ rate, unit, wps_1to5, wps_6to8, pps_1to5, pps_6to8, name }) => {
   return (
     <div className="flex items-center justify-start gap-2 mb-2 ">
@@ -31,8 +28,16 @@ const Item = ({ rate, unit, wps_1to5, wps_6to8, pps_1to5, pps_6to8, name }) => {
           </div>
         </div>
       </div>
-      <Button value={"Edit"} color={"bg-green-600"} />
-      <Button value={"Delete"} color={"bg-red-600"} />
+      <button
+        className={`px-4 py-2 bg-green-600 text-white rounded  cursor-pointer`}
+      >
+        Edit
+      </button>
+      <button
+        className={`px-4 py-2 bg-red-600 text-white rounded  cursor-pointer`}
+      >
+        Delete
+      </button>
     </div>
   );
 };

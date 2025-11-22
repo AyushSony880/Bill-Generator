@@ -24,12 +24,13 @@ export const SchoolContextProvider = (props) => {
       console.error("Error fetching school:", error);
     }
   };
-  const addSchoolData = async (e) => {
+  const addSchoolData = async () => {
     try {
       const res = await axios.post(`${backendURL}/school/add`, {
         school_name: newSchool.schoolName,
         address: newSchool.address,
       });
+      getSchoolData();
       return { success: true, data: res.data };
     } catch (error) {
       console.log("Error save school:", error);
@@ -39,12 +40,32 @@ export const SchoolContextProvider = (props) => {
       return { success: false, message: msg };
     }
   };
+  const removeSchool = async (id) => {
+    try {
+      const res = await axios.delete(`${backendURL}/school/remove/${id}`);
+      getSchoolData();
+      return { success: true, data: res.data };
+    } catch (error) {
+      console.log("Error remove school:", error);
+      const msg =
+        error.response?.data?.message ||
+        "Something went wrong while removing school";
+      return { success: false, message: msg };
+    }
+  };
 
   useEffect(() => {
     getSchoolData();
   }, []);
 
-  const value = { school, setSchool, newSchool, setNewSchool, addSchoolData };
+  const value = {
+    school,
+    setSchool,
+    newSchool,
+    setNewSchool,
+    addSchoolData,
+    removeSchool,
+  };
   return (
     <schoolContext.Provider value={value}>
       {props.children}
