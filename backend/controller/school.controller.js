@@ -15,15 +15,15 @@ const getSchool = async (req, res) => {
 
 const addSchool = async (req, res) => {
   try {
-    const { schoolName, address } = req.body;
-    if (!schoolName || !address) {
-      return res.json({
-        message: "Fill required field.",
+    const { school_name, address } = req.body;
+    if (!school_name || !address) {
+      return res.status(400).json({
+        message: "Fill required field."
       });
     }
     const [result] = await pool.query(
       "INSERT INTO school (school_name, address) VALUES (?, ?)",
-      [schoolName, address]
+      [school_name, address]
     );
     return res.json({
       success: true,
@@ -40,7 +40,7 @@ const addSchool = async (req, res) => {
     res.status(400).json({
       success: false,
       message: "Error to add school data",
-      Error: error,
+      Error: error.data.message||error.message,
     });
   }
 };
