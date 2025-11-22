@@ -8,7 +8,12 @@ export const schoolContext = createContext(null);
 export const useSchool = () => useContext(schoolContext);
 
 export const SchoolContextProvider = (props) => {
-  const [school, setSchool] = useState("");
+  const [school, setSchool] = useState([]);
+  const [newSchool, setNewSchool] = useState({
+    schoolName: "",
+    address: "",
+  });
+
   const backendURL = "http://localhost:3000";
 
   const getSchoolData = async () => {
@@ -19,13 +24,30 @@ export const SchoolContextProvider = (props) => {
       console.error("Error fetching school:", error);
     }
   };
+  const addSchoolData = async (e) => {
+    try {
+      const res = await axios.post(`${backendURL}/school/add`, {
+        school_name: newSchool.schoolName,
+        address: newSchool.address,
+      });
+      return { success: true, data: res.data };
+    } catch (error) {
+      console.log("Error save school:", error);
+      const msg =
+        error.response?.data?.message ||
+        "Something went wrong while saving school";
+      return { success: false, message: msg };
+    }
+  };
 
   useEffect(() => {
     getSchoolData();
   }, []);
 
-  const value = { school, setSchool };
+  const value = { school, setSchool, newSchool, setNewSchool, addSchoolData };
   return (
-    <schoolContext.Provider value={value}>{props.children}</schoolContext.Provider>
+    <schoolContext.Provider value={value}>
+      {props.children}
+    </schoolContext.Provider>
   );
 };
