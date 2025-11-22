@@ -24,6 +24,7 @@ const MangeProduct = () => {
               product_name,
             }) => (
               <Item
+                id={prod_id}
                 key={prod_id}
                 rate={rate}
                 unit={unit}

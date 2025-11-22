@@ -20,12 +20,28 @@ export const ProductContextProvider = (props) => {
     }
   };
 
+  const removeProduct = async (id) => {
+    try {
+      const res = await axios.delete(`${backendURL}/product/remove/${id}`);
+      getProductData();
+      return { success: true, data: res.data };
+    } catch (error) {
+      console.log("Error remove item:", error);
+      const msg =
+        error.response?.data?.message ||
+        "Something went wrong while removing item";
+      return { success: false, message: msg };
+    }
+  };
+
   useEffect(() => {
     getProductData();
   }, []);
 
-  const value = { product, setProduct };
+  const value = { product, setProduct,removeProduct };
   return (
-    <productContext.Provider value={value}>{props.children}</productContext.Provider>
+    <productContext.Provider value={value}>
+      {props.children}
+    </productContext.Provider>
   );
 };

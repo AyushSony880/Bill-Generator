@@ -3,7 +3,7 @@ import School from "../common/School";
 import SchoolInput from "../common/SchoolInput";
 
 const ManageSchools = () => {
-  const { school, removeSchool } = useSchool();
+  const { school } = useSchool();
 
   return (
     <div className="bg-[#ffffff] rounded-lg shadow-sm w-[70%]  p-6">
