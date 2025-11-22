@@ -52,12 +52,24 @@ const removeSchool = async (req, res) => {
       "DELETE FROM schooL WHERE school_id=(?)",
       [id]
     );
-    res.send(result);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No school found with this id",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "School deleted successfully",
+    });
   } catch (error) {
-    res.status(400).json({
+    console.log("DELETE ERROR ===>", error); // debugging
+
+    return res.status(500).json({
       success: false,
       message: "Error to delete school",
-      Error: error.data.message || error.message,
+      error: error.message, // sirf ye rakho
     });
   }
 };
