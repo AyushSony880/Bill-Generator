@@ -64,12 +64,12 @@ const removeSchool = async (req, res) => {
       message: "School deleted successfully",
     });
   } catch (error) {
-    console.log("DELETE ERROR ===>", error); // debugging
+    console.log("DELETE ERROR ===>", error);
 
     return res.status(500).json({
       success: false,
       message: "Error to delete school",
-      error: error.message, // sirf ye rakho
+      error: error.message, 
     });
   }
 };
