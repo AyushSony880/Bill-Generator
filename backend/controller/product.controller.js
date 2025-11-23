@@ -43,9 +43,8 @@ const removeProduct = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     const { product_name, rate, unit, wps_1to5, wps_6to8 } = req.body;
-    // res.send(school_id, year, month, stu_1to5, stu_6to8);
 
-    if ((!product_name, !rate, !unit, !wps_1to5, !wps_6to8)) {
+    if (!product_name || !rate || !unit || !wps_1to5 || !wps_6to8) {
       return res.status(400).json({
         message: "Fill required field.",
       });
@@ -71,7 +70,7 @@ const addProduct = async (req, res) => {
     res.status(400).json({
       success: false,
       message: "Error to add item",
-      Error: error.data.message || error.message,
+      Error: error.message,
     });
   }
 };
