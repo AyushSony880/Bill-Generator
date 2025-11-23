@@ -38,7 +38,7 @@ const addMonthlyRecord = async (req, res) => {
     if (error.code === "ER_DUP_ENTRY") {
       return res.status(409).json({
         success: false,
-        message: "Already Done.",
+        message: "record already exist.",
       });
     }
     res.status(400).json({
