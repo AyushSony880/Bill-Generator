@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Select,
   SelectTrigger,
@@ -8,64 +7,57 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
+import { useRecord } from "../../context/RecordContext.jsx";
+import { useEffect, useState } from "react";
 
-export default function MonthYearPicker({ onChange }) {
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+export default function MonthYearPicker() {
+  const { attendance, setAttendance, reset } = useRecord();
+  const [month, setmonth] = useState("");
+  const [year, setyear] = useState("");
+  // console.log(month, year);
+
+  const handleFn = () => {
+    setAttendance((prev) => ({
+      ...prev,
+      month: month,
+      year: year,
+    }));
+  };
+  useEffect(() => {
+    handleFn();
+  }, [month, year]);
+
+  useEffect(() => {
+    setmonth((prev) => (prev = ""));
+    setyear((prev) => (prev = ""));
+  }, [reset]);
 
   const months = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth(); // 0–11
   const years = Array.from({ length: 20 }, (_, i) => currentYear - i);
 
-  const handleChange = (selectedMonth, selectedYear) => {
-    if (selectedMonth && selectedYear) {
-      const date = new Date(selectedYear, selectedMonth, 1);
-      onChange && onChange(date);
-    }
-  };
-
   return (
     <div className="flex gap-4">
-      
-      {/* MONTH SELECT */}
-      <Select
-        onValueChange={(value) => {
-          setMonth(value);
-          handleChange(Number(value), year);
-        }}
-      >
-        <SelectTrigger className="w-[150px]">
-          <SelectValue placeholder="Select Month" />
-        </SelectTrigger>
-
-        <SelectContent>
-          {months.map((m, index) => {
-            const disabled =
-              year == currentYear && index > currentMonth;
-
-            return (
-              <SelectItem
-                key={index}
-                value={index.toString()}
-                disabled={disabled}
-              >
-                {m}
-              </SelectItem>
-            );
-          })}
-        </SelectContent>
-      </Select>
-
       {/* YEAR SELECT */}
       <Select
+        value={year}
         onValueChange={(value) => {
-          setYear(value);
-          handleChange(month, Number(value));
+          setyear(value);
         }}
       >
         <SelectTrigger className="w-[150px]">
@@ -74,13 +66,34 @@ export default function MonthYearPicker({ onChange }) {
 
         <SelectContent>
           {years.map((y) => (
-            <SelectItem key={y} value={y.toString()}>
+            <SelectItem key={y} value={y}>
               {y}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
+      {/* MONTH SELECT */}
+      <Select
+        value={month}
+        onValueChange={(value) => {
+          setmonth(value);
+        }}
+      >
+        <SelectTrigger className="w-[150px]">
+          <SelectValue placeholder="Select Month" />
+        </SelectTrigger>
 
+        <SelectContent>
+          {months.map((m, index) => {
+            const disabled = year == currentYear && index > currentMonth;
+            return (
+              <SelectItem key={index} value={m} disabled={disabled}>
+                {m}
+              </SelectItem>
+            );
+          })}
+        </SelectContent>
+      </Select>
     </div>
   );
 }

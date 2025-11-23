@@ -4,7 +4,7 @@ import Student from "../common/Student";
 
 const EnterData = () => {
   const { record, setRecord } = useRecord();
-  console.log(record);
+  // console.log(record);
 
   return (
     <div className="bg-[#ffffff] rounded-lg shadow-sm w-[70%]  p-6">
