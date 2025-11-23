@@ -15,4 +15,38 @@ const getMonthlyRecord = async (req, res) => {
   }
 };
 
-export { getMonthlyRecord };
+const addMonthlyRecord = async (req, res) => {
+  try {
+    const { school_id, year, month, stu_1to5, stu_6to8 } = req.body;
+    // res.send(school_id, year, month, stu_1to5, stu_6to8);
+    
+    if (!school_id, !year, !month, !stu_1to5, !stu_6to8) {
+      return res.status(400).json({
+        message: "Fill required field.",
+      });
+    }
+    const [result] = await pool.query(
+      "INSERT INTO monthlyRecord (school_id, year, month, stu_1to5, stu_6to8) VALUES (?, ?,?,?,?)",
+      [school_id, year, month, stu_1to5, stu_6to8]
+    );
+    return res.json({
+      success: true,
+      message: " Data Saved",
+      id: result.insertId,
+    });
+  } catch (error) {
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(409).json({
+        success: false,
+        message: "Already Done.",
+      });
+    }
+    res.status(400).json({
+      success: false,
+      message: "Error to add addMonthly Record ",
+      Error: error.data.message || error.message,
+    });
+  }
+};
+
+export { getMonthlyRecord, addMonthlyRecord };
