@@ -3,6 +3,7 @@ import { createContext } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
+import { useRecord } from "./RecordContext.jsx";
 
 export const schoolContext = createContext(null);
 export const useSchool = () => useContext(schoolContext);
@@ -13,6 +14,7 @@ export const SchoolContextProvider = (props) => {
     schoolName: "",
     address: "",
   });
+  const { getRecordData } = useRecord();
 
   const backendURL = "http://localhost:3000";
 
@@ -44,6 +46,7 @@ export const SchoolContextProvider = (props) => {
     try {
       const res = await axios.delete(`${backendURL}/school/remove/${id}`);
       getSchoolData();
+      getRecordData();
       return { success: true, data: res.data };
     } catch (error) {
       console.log("Error remove school:", error);

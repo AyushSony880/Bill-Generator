@@ -7,14 +7,33 @@ import {
 } from "@/components/ui/select";
 import MonthYearPicker from "./MonthYearPicker";
 import { useSchool } from "../../context/SchoolContext.jsx";
-import { useState } from "react";
 import { useRecord } from "../../context/RecordContext.jsx";
+import { toast } from "react-toastify";
 
 const AattendanceInput = () => {
   const { school } = useSchool();
-  const { attendance, setAttendance, setReset } = useRecord();
+  const { attendance, setAttendance, setReset, addRecordData } = useRecord();
 
   // console.log(attendance);
+
+  const handleSubmit = async () => {
+    const result = await addRecordData();
+    if (!result.success) {
+      console.log(result);
+      
+      toast.error(result.message);
+    } else {
+      toast.success("Saved successfully!");
+    }
+     setReset((prev) => (prev = !prev));
+    setAttendance({
+      school_id: "",
+      year: "",
+      month: "",
+      stu_1to5: "",
+      stu_6to8: "",
+    });
+  };
 
   return (
     <div>
@@ -57,7 +76,10 @@ const AattendanceInput = () => {
           }
         />
       </section>
-      <button className="px-4 mr-5 py-2 bg-green-600 text-white rounded my-10 cursor-pointer">
+      <button
+        onClick={handleSubmit}
+        className="px-4 mr-5 py-2 bg-green-600 text-white rounded my-10 cursor-pointer"
+      >
         Save
       </button>
       <button

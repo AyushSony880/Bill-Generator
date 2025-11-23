@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useRecord } from "../../context/RecordContext";
 import AattendanceInput from "../common/AattendanceInput";
 import Student from "../common/Student";
@@ -5,6 +6,7 @@ import Student from "../common/Student";
 const EnterData = () => {
   const { record, setRecord } = useRecord();
   // console.log(record);
+  
 
   return (
     <div className="bg-[#ffffff] rounded-lg shadow-sm w-[70%]  p-6">
