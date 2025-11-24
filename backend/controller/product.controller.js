@@ -74,5 +74,33 @@ const addProduct = async (req, res) => {
     });
   }
 };
+const editProduct = async (req, res) => {
+  try {
+    const { prod_id, rate, unit, wps_1to5, wps_6to8 } = req.body;
 
-export { getProduct, removeProduct, addProduct };
+    if ((!prod_id, !rate || !unit || !wps_1to5 || !wps_6to8)) {
+      return res.status(400).json({
+        message: "Fill required field.",
+      });
+    }
+    const pps_1to5 = ((rate / 1000) * wps_1to5).toFixed(3);
+    const pps_6to8 = ((rate / 1000) * wps_6to8).toFixed(3);
+    const [result] = await pool.query(
+      "UPDATE product SET rate= ?,unit= ?,wps_1to5= ?,wps_6to8= ?,pps_1to5= ?,pps_6to8= ? WHERE prod_id = ?",
+      [rate, unit, wps_1to5, wps_6to8, pps_1to5, pps_6to8, prod_id]
+    );
+    return res.json({
+      success: true,
+      message: " Item updated successfully...",
+      id: result.insertId,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Error to update item",
+      Error: error.message,
+    });
+  }
+};
+
+export { getProduct, removeProduct, addProduct, editProduct };
