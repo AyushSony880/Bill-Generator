@@ -16,6 +16,7 @@ const EnterData = () => {
         {Array.isArray(record) && record.length > 0 ? (
           record.map(({ id,month, year, stu_6to8, stu_1to5, school }) => (
             <Student
+              key={id}
               id={id}
               month={month}
               year={year}

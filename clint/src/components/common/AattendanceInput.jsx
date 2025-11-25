@@ -62,7 +62,7 @@ const AattendanceInput = () => {
   return (
     <div>
       <section className=" flex items-center justify-start gap-5">
-        <Select
+        {editingId?"":<Select
           value={attendance.school_id?.toString()}
           onValueChange={(value) =>
             setAttendance({ ...attendance, school_id: value })
@@ -79,7 +79,7 @@ const AattendanceInput = () => {
                 </SelectItem>
               ))}
           </SelectContent>
-        </Select>
+        </Select>}
         <MonthYearPicker />
         <input
           onChange={(e) =>
