@@ -78,7 +78,7 @@ const editProduct = async (req, res) => {
   try {
     const { prod_id, rate, unit, wps_1to5, wps_6to8 } = req.body;
 
-    if ((!prod_id, !rate || !unit || !wps_1to5 || !wps_6to8)) {
+    if ((!prod_id|| !rate || !unit || !wps_1to5 || !wps_6to8)) {
       return res.status(400).json({
         message: "Fill required field.",
       });
