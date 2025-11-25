@@ -15,7 +15,7 @@ const ManageSchools = () => {
           school.map(({ school_id, school_name, address }) => (
             <School
              
-              id={school_id}
+              school_id={school_id}
               key={school_name}
               schoolName={school_name}
               address={address}

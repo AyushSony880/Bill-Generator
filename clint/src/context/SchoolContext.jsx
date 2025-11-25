@@ -4,12 +4,14 @@ import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
 import { useRecord } from "./RecordContext.jsx";
+import { toast } from "react-toastify";
 
 export const schoolContext = createContext(null);
 export const useSchool = () => useContext(schoolContext);
 
 export const SchoolContextProvider = (props) => {
   const [school, setSchool] = useState([]);
+  const [editingId, setEditingId] = useState(null);
   const [newSchool, setNewSchool] = useState({
     schoolName: "",
     address: "",
@@ -56,6 +58,48 @@ export const SchoolContextProvider = (props) => {
       return { success: false, message: msg };
     }
   };
+  const editSchool = async () => {
+    try {
+      const res = await axios.put(`${backendURL}/school/edit`, {
+        school_id: newSchool.school_id,
+        address: newSchool.address,
+      });
+
+      await getSchoolData();
+      return { success: true, data: res.data };
+    } catch (error) {
+      console.log("Error save school:", error);
+      const msg =
+        error.response?.data?.message ||
+        "Something went wrong while saving school";
+      return { success: false, message: msg };
+    }
+  };
+
+  const handleEdit = async (school_id, address) => {
+    if (editingId !== school_id) {
+      setEditingId(school_id);
+      setNewSchool({
+        schoolName: "",
+        school_id: school_id,
+        address: address,
+      });
+    } else {
+      const result = await editSchool();
+
+      if (!result.success) {
+        toast.error(result.message);
+      } else {
+        toast.success("Saved successfully!");
+      }
+      setEditingId(null);
+      setNewSchool({
+        schoolName: "",
+        address: "",
+        school_id: "",
+      });
+    }
+  };
 
   useEffect(() => {
     getSchoolData();
@@ -68,6 +112,10 @@ export const SchoolContextProvider = (props) => {
     setNewSchool,
     addSchoolData,
     removeSchool,
+    editSchool,
+    handleEdit,
+    editingId,
+    setEditingId,
   };
   return (
     <schoolContext.Provider value={value}>

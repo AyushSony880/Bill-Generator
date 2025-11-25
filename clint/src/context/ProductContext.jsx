@@ -61,10 +61,8 @@ export const ProductContextProvider = (props) => {
       return { success: false, message: msg };
     }
   };
-  const editProduct = async (id) => {
+  const editProduct = async () => {
     try {
-      console.log("call", item);
-      console.log(item);
 
       const res = await axios.put(`${backendURL}/product/edit`, {
         prod_id: item.prod_id,
@@ -73,15 +71,14 @@ export const ProductContextProvider = (props) => {
         wps_1to5: item.wps_1to5,
         wps_6to8: item.wps_6to8,
       });
-      console.log(res);
 
       await getProductData();
       return { success: true, data: res.data };
     } catch (error) {
-      console.log("Error save school:", error);
+      console.log("Error save product:", error);
       const msg =
         error.response?.data?.message ||
-        "Something went wrong while saving school";
+        "Something went wrong while product school";
       return { success: false, message: msg };
     }
   };
@@ -89,7 +86,6 @@ export const ProductContextProvider = (props) => {
   const handleEdit = async (prod_id, rate, unit, wps_1to5, wps_6to8) => {
     if (editingId !== prod_id) {
        setEditingId(prod_id);
-      console.log("in");
       setItem({
         prod_id: prod_id,
         product_name: "",
@@ -101,7 +97,6 @@ export const ProductContextProvider = (props) => {
     } else {
 
       const result = await editProduct();
-      console.log(result);
 
       if (!result.success) {
         toast.error(result.message);
