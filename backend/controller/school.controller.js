@@ -69,8 +69,35 @@ const removeSchool = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Error to delete school",
-      error: error.message, 
+      error: error.message,
     });
   }
 };
-export { getSchool, addSchool, removeSchool };
+
+const editSchool = async (req, res) => {
+  try {
+    const { school_id, address } = req.body;
+
+    if (!address || !school_id) {
+      return res.status(400).json({
+        message: "Fill required field.",
+      });
+    }
+    const [result] = await pool.query(
+      "UPDATE school SET address= ? WHERE school_id = ?",
+      [address, school_id]
+    );
+    return res.json({
+      success: true,
+      message: " School updated successfully...",
+      id: result.insertId,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Error to update school",
+      Error: error.message,
+    });
+  }
+};
+export { getSchool, addSchool, removeSchool ,editSchool};
