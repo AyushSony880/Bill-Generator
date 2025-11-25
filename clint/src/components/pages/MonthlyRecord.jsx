@@ -5,7 +5,7 @@ import Student from "../common/Student";
 
 const EnterData = () => {
   const { record, setRecord } = useRecord();
-  // console.log(record);
+  console.log(record);
   
 
   return (
@@ -14,8 +14,9 @@ const EnterData = () => {
       <AattendanceInput />
       <section className="mt-5 p-5 border-t-2">
         {Array.isArray(record) && record.length > 0 ? (
-          record.map(({ month, year, stu_6to8, stu_1to5, school }) => (
+          record.map(({ id,month, year, stu_6to8, stu_1to5, school }) => (
             <Student
+              id={id}
               month={month}
               year={year}
               stu_6to8={stu_6to8}

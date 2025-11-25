@@ -11,7 +11,7 @@ import { useRecord } from "../../context/RecordContext.jsx";
 import { useEffect, useState } from "react";
 
 export default function MonthYearPicker() {
-  const { attendance, setAttendance, reset } = useRecord();
+  const { editingId, setAttendance, reset } = useRecord();
   const [month, setmonth] = useState("");
   const [year, setyear] = useState("");
   // console.log(month, year);
@@ -52,7 +52,7 @@ export default function MonthYearPicker() {
   const years = Array.from({ length: 20 }, (_, i) => currentYear - i);
 
   return (
-    <div className="flex gap-4">
+    <div className={`${editingId ? "hidden" : ""} flex gap-4`}>
       {/* YEAR SELECT */}
       <Select
         value={year}

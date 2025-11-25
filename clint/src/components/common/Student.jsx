@@ -1,6 +1,7 @@
+import { useRecord } from "../../context/RecordContext.jsx";
 
-
-const Student = ({ year, stu_6to8, stu_1to5, school, month }) => {
+const Student = ({ id, year, stu_6to8, stu_1to5, school, month }) => {
+  const { handleEdit, editingId } = useRecord();
   return (
     <div className="flex items-center justify-start gap-2 mb-2 ">
       <div className="border-2 px-5 py-1 rounded-md min-w-2xl  mr-5">
@@ -19,17 +20,17 @@ const Student = ({ year, stu_6to8, stu_1to5, school, month }) => {
           </p>{" "}
         </div>
       </div>
-        <button
+      <button
+        onClick={() => handleEdit(id, stu_1to5, stu_6to8)}
         className={`px-4 py-2 bg-green-600 text-white rounded  cursor-pointer`}
       >
-        Edit
+        {editingId === id ? "Update" : "Edit"}
       </button>
-        <button
+      <button
         className={`px-4 py-2 bg-indigo-600 text-white rounded  cursor-pointer`}
       >
         Generate Bill
       </button>
-      
     </div>
   );
 };

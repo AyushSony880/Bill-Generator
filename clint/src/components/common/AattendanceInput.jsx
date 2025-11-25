@@ -12,27 +12,51 @@ import { toast } from "react-toastify";
 
 const AattendanceInput = () => {
   const { school } = useSchool();
-  const { attendance, setAttendance, setReset, addRecordData } = useRecord();
-
-  // console.log(attendance);
+  const {
+    attendance,
+    setAttendance,
+    setReset,
+    addRecordData,
+    editingId,
+    setEditingId,
+    editMonthlyRecord,
+  } = useRecord();
 
   const handleSubmit = async () => {
-    const result = await addRecordData();
-    if (!result.success) {
-      console.log(result);
-      
-      toast.error(result.message);
+    if (editingId) {
+      const result = await editMonthlyRecord();
+
+      if (!result.success) {
+        toast.error(result.message);
+      } else {
+        toast.success("Saved successfully!");
+      }
+      setEditingId(null);
+      setAttendance({
+        school_id: "",
+        year: "",
+        month: "",
+        stu_1to5: "",
+        stu_6to8: "",
+      });
     } else {
-      toast.success("Saved successfully!");
+      const result = await addRecordData();
+      if (!result.success) {
+        console.log(result);
+
+        toast.error(result.message);
+      } else {
+        toast.success("Saved successfully!");
+      }
+      setReset((prev) => (prev = !prev));
+      setAttendance({
+        school_id: "",
+        year: "",
+        month: "",
+        stu_1to5: "",
+        stu_6to8: "",
+      });
     }
-     setReset((prev) => (prev = !prev));
-    setAttendance({
-      school_id: "",
-      year: "",
-      month: "",
-      stu_1to5: "",
-      stu_6to8: "",
-    });
   };
 
   return (
@@ -80,7 +104,7 @@ const AattendanceInput = () => {
         onClick={handleSubmit}
         className="px-4 mr-5 py-2 bg-green-600 text-white rounded my-10 cursor-pointer"
       >
-        Save
+        {editingId ? "Update" : "Save"}
       </button>
       <button
         onClick={() => {
