@@ -4,7 +4,7 @@ import Item from "../common/Item";
 import { useProduct } from "../../context/ProductContext";
 
 const MangeProduct = () => {
-  const { product, setProduct } = useProduct();
+  const { product } = useProduct();
 
   return (
     <div className="bg-[#ffffff] rounded-lg shadow-sm w-[70%]  p-6">
@@ -24,7 +24,7 @@ const MangeProduct = () => {
               product_name,
             }) => (
               <Item
-                id={prod_id}
+                prod_id={prod_id}
                 key={prod_id}
                 rate={rate}
                 unit={unit}

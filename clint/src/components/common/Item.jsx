@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useProduct } from "../../context/ProductContext";
 
 const Item = ({
-  id,
+  prod_id,
   rate,
   unit,
   wps_1to5,
@@ -11,7 +11,9 @@ const Item = ({
   pps_6to8,
   name,
 }) => {
-  const { removeProduct } = useProduct();
+  const { removeProduct,handleEdit,editingId } =
+    useProduct();
+  
   return (
     <div className="flex items-center justify-start gap-2 mb-2 ">
       <div className="border-2 flex items-center  gap-10 px-5 py-2 rounded-md min-w-2xl  mr-5">
@@ -42,13 +44,15 @@ const Item = ({
         </div>
       </div>
       <button
+        onClick={() => handleEdit(prod_id, rate, unit, wps_1to5, wps_6to8)}
         className={`px-4 py-2 bg-green-600 text-white rounded  cursor-pointer`}
       >
-        Edit
+       {editingId === prod_id ? "Update" : "Edit"}
+
       </button>
       <button
         onClick={async () => {
-          const result = await removeProduct(id);
+          const result = await removeProduct(prod_id);
           if (!result.success) {
             toast.error(result.message);
           } else {

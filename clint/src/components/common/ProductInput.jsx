@@ -9,22 +9,48 @@ import { useProduct } from "../../context/ProductContext.jsx";
 import { toast } from "react-toastify";
 
 const ProductInput = () => {
-  const { item, setItem, addProduct } = useProduct();
+  const {
+    item,
+    setItem,
+    addProduct,
+    editingId,
+    setEditingId,
+    editProduct
+  } = useProduct();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await addProduct();
-    if (!result.success) {
-      toast.error(result.message);
+    if (editingId) {
+       const result = await editProduct();
+
+      if (!result.success) {
+        toast.error(result.message);
+      } else {
+        toast.success("Saved successfully!");
+      }
+      setEditingId(null);
+      setItem({
+        product_name: "",
+        rate: "",
+        unit: "",
+        wps_1to5: "",
+        wps_6to8: "",
+      });
     } else {
-      toast.success("Saved successfully!");
+      const result = await addProduct();
+      if (!result.success) {
+        toast.error(result.message);
+      } else {
+        toast.success("Saved successfully!");
+      }
+      setItem({
+        product_name: "",
+        rate: "",
+        unit: "",
+        wps_1to5: "",
+        wps_6to8: "",
+      });
     }
-    setItem({
-      product_name: "",
-      rate: "",
-      unit: "",
-      wps_1to5: "",
-      wps_6to8: "",
-    });
   };
   return (
     <form onSubmit={handleSubmit} className="">
@@ -32,7 +58,7 @@ const ProductInput = () => {
         <input
           onChange={(e) => setItem({ ...item, product_name: e.target.value })}
           value={item.product_name}
-          className=" border rounded-md w-64 px-2"
+          className={`border rounded-md w-64 px-2 ${editingId ? "hidden" : ""}`}
           type="text"
           placeholder="Product name"
         />
@@ -73,10 +99,9 @@ const ProductInput = () => {
       <div className="flex items-center justify-start my-8 gap-x-5">
         <button
           type="submit"
-          // onClick={(e)=>handleSubmit(e)}
           className={`px-4 py-2 bg-indigo-600 text-white rounded  cursor-pointer`}
         >
-          Add
+          {editingId ? "Update" : "Add"}
         </button>
         <button
           type="button"
