@@ -19,8 +19,8 @@ const addMonthlyRecord = async (req, res) => {
   try {
     const { school_id, year, month, stu_1to5, stu_6to8 } = req.body;
     // res.send(school_id, year, month, stu_1to5, stu_6to8);
-    
-    if (!school_id, !year, !month, !stu_1to5, !stu_6to8) {
+
+    if ((!school_id, !year, !month, !stu_1to5, !stu_6to8)) {
       return res.status(400).json({
         message: "Fill required field.",
       });
@@ -49,4 +49,31 @@ const addMonthlyRecord = async (req, res) => {
   }
 };
 
-export { getMonthlyRecord, addMonthlyRecord };
+const editMonthlyRecord = async (req, res) => {
+  try {
+    const { id, stu_1to5, stu_6to8 } = req.body;
+
+    if (!id || !stu_1to5 || !stu_6to8) {
+      return res.status(400).json({
+        message: "Fill required field.",
+      });
+    }
+    const [result] = await pool.query(
+      "UPDATE monthlyRecord SET stu_1to5= ?,stu_6to8=? WHERE id = ?",
+      [stu_1to5, stu_6to8,id]
+    );
+    return res.json({
+      success: true,
+      message: " Monthly record updated successfully...",
+      id: result.insertId,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Error to update monthly record",
+      Error: error.message,
+    });
+  }
+};
+
+export { getMonthlyRecord, addMonthlyRecord,editMonthlyRecord };
