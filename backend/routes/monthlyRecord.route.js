@@ -10,6 +10,7 @@ const monthlyRecordRouter = express.Router();
 
 monthlyRecordRouter.get("/get", getMonthlyRecord);
 monthlyRecordRouter.get("/preview/:id/:month/:year", previewMonthlyRecord);
+
 monthlyRecordRouter.post("/add", addMonthlyRecord);
 monthlyRecordRouter.put("/edit", editMonthlyRecord);
 
