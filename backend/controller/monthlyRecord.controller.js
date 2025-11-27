@@ -79,7 +79,9 @@ const editMonthlyRecord = async (req, res) => {
 const previewMonthlyRecord = async (req, res) => {
   try {
     const { id, month, year } = req.params;
-
+    console.log(id);
+    
+    
     const billRecord = {
       id: "",
       school: "",
@@ -102,7 +104,7 @@ const previewMonthlyRecord = async (req, res) => {
        FROM monthlyRecord mr 
        INNER JOIN school s ON mr.school_id = s.school_id 
        WHERE mr.month = ? AND mr.year = ? AND mr.school_id=?`,
-      [month, year,id]
+      [month, year, id]
     );
 
     if (rows1.length === 0) {
