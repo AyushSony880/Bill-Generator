@@ -10,6 +10,7 @@ export const useRecord = () => useContext(recordContext);
 
 export const RecordContextProvider = (props) => {
   const [record, setRecord] = useState("");
+  const [billRecord, setBillRecord] = useState({});
   const [reset, setReset] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [attendance, setAttendance] = useState({
@@ -19,6 +20,7 @@ export const RecordContextProvider = (props) => {
     stu_1to5: "",
     stu_6to8: "",
   });
+  console.log(attendance);
 
   const backendURL = "http://localhost:3000";
 
@@ -30,6 +32,7 @@ export const RecordContextProvider = (props) => {
       console.error("Error fetching record:", error);
     }
   };
+
   const addRecordData = async () => {
     try {
       const res = await axios.post(`${backendURL}/monthlyRecord/add`, {
@@ -70,17 +73,33 @@ export const RecordContextProvider = (props) => {
       return { success: false, message: msg };
     }
   };
+  const generateMonthlyRecord = async () => {
+    try {
+      const res = await axios.get(
+        `${backendURL}/monthlyRecord/preview/${attendance.school_id}/${attendance.month}/${attendance.year}`
+      );
+      setBillRecord(res.data);
+      return { success: true, data: billRecord };
+    } catch (error) {
+      console.error("Error preview record:", error);
+      const msg =
+        error.response?.data?.message ||
+        "Something went wrong while generating Bill";
+      return { success: false, message: msg };
+    }
+  };
+
   const handleEdit = async (id, stu_1to5, stu_6to8) => {
     console.log(id);
-    
+
     if (editingId !== id) {
       setEditingId(id);
       setAttendance({
         school_id: "",
         year: "",
         month: "",
-        stu_1to5:stu_1to5,
-        stu_6to8:stu_6to8,
+        stu_1to5: stu_1to5,
+        stu_6to8: stu_6to8,
         id: id,
       });
     } else {
@@ -101,6 +120,26 @@ export const RecordContextProvider = (props) => {
       });
     }
   };
+  const handleGenerateBill = async () => {
+    console.log("attendance", attendance);
+
+    const result = await generateMonthlyRecord();
+
+    if (!result.success) {
+      toast.error(result.message);
+    } else {
+      toast.success("Generated successfully!");
+    }
+
+    setAttendance({
+      school_id: "",
+      year: "",
+      month: "",
+      stu_1to5: "",
+      stu_6to8: "",
+    });
+    setReset((prev) => (prev = !prev));
+  };
 
   useEffect(() => {
     getRecordData();
@@ -119,6 +158,9 @@ export const RecordContextProvider = (props) => {
     handleEdit,
     editingId,
     setEditingId,
+    handleGenerateBill,
+    billRecord,
+    setBillRecord,
   };
   return (
     <recordContext.Provider value={value}>
