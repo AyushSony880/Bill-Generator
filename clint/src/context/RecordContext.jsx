@@ -73,22 +73,6 @@ export const RecordContextProvider = (props) => {
       return { success: false, message: msg };
     }
   };
-  const generateMonthlyRecord = async () => {
-    try {
-      const res = await axios.get(
-        `${backendURL}/monthlyRecord/preview/${attendance.school_id}/${attendance.month}/${attendance.year}`
-      );
-      setBillRecord(res.data);
-      return { success: true, data: billRecord };
-    } catch (error) {
-      console.error("Error preview record:", error);
-      const msg =
-        error.response?.data?.message ||
-        "Something went wrong while generating Bill";
-      return { success: false, message: msg };
-    }
-  };
-
   const handleEdit = async (id, stu_1to5, stu_6to8) => {
     console.log(id);
 
@@ -120,10 +104,33 @@ export const RecordContextProvider = (props) => {
       });
     }
   };
-  const handleGenerateBill = async () => {
+  const generateMonthlyRecord = async (
+    arg_school_id = null,
+    arg_month = null,
+    arg_year = null
+  ) => {
+    try {
+      const school_id = attendance.school_id || arg_school_id;
+      const month = attendance.month || arg_month;
+      const year = attendance.year || arg_year;
+      const res = await axios.get(
+        `${backendURL}/monthlyRecord/preview/${school_id}/${month}/${year}`
+      );
+      setBillRecord(res.data);
+      return { success: true, data: billRecord };
+    } catch (error) {
+      console.error("Error preview record:", error);
+      const msg =
+        error.response?.data?.message ||
+        "Something went wrong while generating Bill";
+      return { success: false, message: msg };
+    }
+  };
+
+  const handleGenerateBill = async (school_id, month, year) => {
     console.log("attendance", attendance);
 
-    const result = await generateMonthlyRecord();
+    const result = await generateMonthlyRecord(school_id, month, year);
 
     if (!result.success) {
       toast.error(result.message);

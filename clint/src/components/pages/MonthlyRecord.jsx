@@ -14,8 +14,9 @@ const EnterData = () => {
       <AattendanceInput />
       <section className="mt-5 p-5 border-t-2">
         {Array.isArray(record) && record.length > 0 ? (
-          record.map(({ id,month, year, stu_6to8, stu_1to5, school }) => (
+          record.map(({school_id, id,month, year, stu_6to8, stu_1to5, school }) => (
             <Student
+              school_id={school_id}
               key={id}
               id={id}
               month={month}

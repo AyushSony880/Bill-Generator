@@ -1,7 +1,17 @@
 import { useRecord } from "../../context/RecordContext.jsx";
-
-const Student = ({ id, year, stu_6to8, stu_1to5, school, month }) => {
-  const { handleEdit, editingId } = useRecord();
+import { useNavigate } from "react-router";
+const Student = ({
+  school_id,
+  id,
+  year,
+  stu_6to8,
+  stu_1to5,
+  school,
+  month,
+}) => {
+  const { handleEdit, editingId, setAttendance, attendance ,handleGenerateBill} = useRecord();
+  console.log(attendance);
+const navigate =useNavigate()
   return (
     <div className="flex items-center justify-start gap-2 mb-2 ">
       <div className="border-2 px-5 py-1 rounded-md min-w-2xl  mr-5">
@@ -27,6 +37,17 @@ const Student = ({ id, year, stu_6to8, stu_1to5, school, month }) => {
         {editingId === id ? "Update" : "Edit"}
       </button>
       <button
+        onClick={() =>
+        {
+          // setAttendance({
+          //   school_id,
+          //   year,
+          //   month,
+          // })
+          handleGenerateBill(school_id,month,year)
+          navigate("/")
+        }
+        }
         className={`px-4 py-2 bg-indigo-600 text-white rounded  cursor-pointer`}
       >
         Generate Bill

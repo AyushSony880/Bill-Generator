@@ -1,17 +1,7 @@
-// InvoicePreview.jsx
-import React from "react";
-
 const Invoice = ({ billRecord }) => {
-  if (Object.keys(billRecord).length === 0)
-    return (
-      <h1 className="text-center font-semibold  mb-2">
-        No Data Found
-      </h1>
-    );
-
   const { id, school, month, year, items = [], grand_total = 0 } = billRecord;
 
-  // Optional: round-off calculation
+  //round-off calculation
   const roundedGrandTotal = Number(grand_total || 0);
   const roundOff = Number(
     (Math.round(roundedGrandTotal) - roundedGrandTotal).toFixed(2)
