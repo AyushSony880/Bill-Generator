@@ -77,22 +77,23 @@ const editMonthlyRecord = async (req, res) => {
 };
 
 const previewMonthlyRecord = async (req, res) => {
-  const billRecord = {
-    id: "",
-    school: "",
-    month: "",
-    year: "",
-    stu_1to5: "",
-    stu_6to8: "",
-    items: [],
-    grand_total: 0,
-  };
-
   try {
-    // TODO: yahan se lo: const { month, year } = req.query / req.body;
+    const { id, month, year } = req.params;
+
+    const billRecord = {
+      id: "",
+      school: "",
+      month: "",
+      year: "",
+      stu_1to5: "",
+      stu_6to8: "",
+      items: [],
+      grand_total: 0,
+    };
+
     const [rows1] = await pool.query(
       `SELECT 
-         mr.id, 
+         mr.school_id, 
          s.school_name AS school,
          mr.year,
          mr.month,
@@ -100,14 +101,14 @@ const previewMonthlyRecord = async (req, res) => {
          mr.stu_6to8
        FROM monthlyRecord mr 
        INNER JOIN school s ON mr.school_id = s.school_id 
-       WHERE mr.month = ? AND mr.year = ?`,
-      ["January", 2025] // abhi ke liye demo
+       WHERE mr.month = ? AND mr.year = ? AND mr.school_id=?`,
+      [month, year,id]
     );
 
     if (rows1.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "No monthly record found for given month and year",
+        message: "No monthly record found for given month, year and  school",
       });
     }
 
