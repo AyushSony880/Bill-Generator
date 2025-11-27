@@ -11,7 +11,7 @@ const Item = ({
   pps_6to8,
   name,
 }) => {
-  const { removeProduct,handleEdit,editingId } =
+  const { removeProduct,handleEdit,editingId,setEditingId } =
     useProduct();
   
   return (

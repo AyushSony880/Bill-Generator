@@ -107,6 +107,7 @@ const ProductInput = () => {
           type="button"
           onClick={(e) => {
             e.preventDefault();
+            setEditingId(null)
             setItem({
               product_name: "",
               rate: "",
