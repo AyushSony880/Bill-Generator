@@ -42,9 +42,9 @@ const removeProduct = async (req, res) => {
 };
 const addProduct = async (req, res) => {
   try {
-    const { product_name, rate, unit, wps_1to5, wps_6to8 } = req.body;
+    const { product_name, hsn, rate, unit, wps_1to5, wps_6to8 } = req.body;
 
-    if (!product_name || !rate || !unit || !wps_1to5 || !wps_6to8) {
+    if (!product_name || !hsn || !rate || !unit || !wps_1to5 || !wps_6to8) {
       return res.status(400).json({
         message: "Fill required field.",
       });
@@ -52,8 +52,8 @@ const addProduct = async (req, res) => {
     const pps_1to5 = (rate / 1000) * wps_1to5;
     const pps_6to8 = (rate / 1000) * wps_6to8;
     const [result] = await pool.query(
-      "INSERT INTO product (product_name, rate, unit, wps_1to5, wps_6to8,pps_1to5,pps_6to8 ) VALUES (?,?,?,?,?,?,?)",
-      [product_name, rate, unit, wps_1to5, wps_6to8, pps_1to5, pps_6to8]
+      "INSERT INTO product (product_name,hsn, rate, unit, wps_1to5, wps_6to8,pps_1to5,pps_6to8 ) VALUES (?,?,?,?,?,?,?,?)",
+      [product_name, hsn, rate, unit, wps_1to5, wps_6to8, pps_1to5, pps_6to8]
     );
     return res.json({
       success: true,
@@ -78,7 +78,7 @@ const editProduct = async (req, res) => {
   try {
     const { prod_id, rate, unit, wps_1to5, wps_6to8 } = req.body;
 
-    if ((!prod_id|| !rate || !unit || !wps_1to5 || !wps_6to8)) {
+    if (!prod_id || !rate || !unit || !wps_1to5 || !wps_6to8) {
       return res.status(400).json({
         message: "Fill required field.",
       });
