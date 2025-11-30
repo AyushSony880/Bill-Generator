@@ -1,5 +1,16 @@
+import { useEffect } from "react";
+import { useRecord } from "../../context/RecordContext.jsx";
+
 const Invoice = ({ billRecord }) => {
-  const { id, school, month, year, items = [], grand_total = 0 } = billRecord;
+  const {
+    school_id,
+    id,
+    school,
+    month,
+    year,
+    items = [],
+    grand_total = 0,
+  } = billRecord;
 
   //round-off calculation
   const roundedGrandTotal = Number(grand_total || 0);
@@ -7,6 +18,15 @@ const Invoice = ({ billRecord }) => {
     (Math.round(roundedGrandTotal) - roundedGrandTotal).toFixed(2)
   );
   const finalTotal = Number((roundedGrandTotal + roundOff).toFixed(2));
+  const { pdf, setPdf } = useRecord();
+  useEffect(() => {
+    setPdf({
+      school_id,
+      year,
+      month,
+    });
+  }, [id]);
+  console.log("school_id", pdf);
 
   return (
     <div className="w-[700px]  mx-auto bg-white text-[10px] leading-tight p-4 border border-black">

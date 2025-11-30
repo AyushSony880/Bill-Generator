@@ -10,6 +10,7 @@ export const useRecord = () => useContext(recordContext);
 
 export const RecordContextProvider = (props) => {
   const [record, setRecord] = useState("");
+  const [pdf, setPdf] = useState({ school_id: "", year: "", month: "" });
   const [billRecord, setBillRecord] = useState({});
   const [reset, setReset] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -168,6 +169,8 @@ export const RecordContextProvider = (props) => {
     handleGenerateBill,
     billRecord,
     setBillRecord,
+    pdf,
+    setPdf,
   };
   return (
     <recordContext.Provider value={value}>

@@ -16,9 +16,19 @@ const GenerateBill = () => {
     handleGenerateBill,
     billRecord,
     setBillRecord,
+    pdf,
+    setPdf,
   } = useRecord();
   const { school } = useSchool();
   // console.log(attendance);
+  const handleDownload = () => {
+    if (!pdf.school_id || !pdf.month || !pdf.year) return;
+
+    // Tumhara route params wale format ka hai:
+    const url = `http://localhost:3000/monthlyRecord/preview/${pdf.school_id}/${pdf.month}/${pdf.year}/pdf`;
+
+    window.open(url, "_blank");
+  };
 
   return (
     <div
@@ -62,11 +72,17 @@ const GenerateBill = () => {
       >
         {Object.keys(billRecord).length !== 0 ? (
           <div className=" flex justify-center items-center gap-x-3 absolute top-2 right-5">
-            <p className="p-2 border rounded-lg cursor-pointer bg-green-400 hover:bg-green-500 duration-300">
+            <p
+              onClick={handleDownload}
+              className="p-2 border rounded-lg cursor-pointer bg-green-400 hover:bg-green-500 duration-300"
+            >
               Download
             </p>
             <p
-              onClick={() => setBillRecord({})}
+              onClick={() => {
+                setPdf({ school_id: "", year: "", month: "" });
+                setBillRecord({});
+              }}
               className="px-2 rounded-full border cursor-pointer bg-red-200 hover:bg-red-400 duration-200"
             >
               X
