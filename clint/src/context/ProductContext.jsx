@@ -14,11 +14,13 @@ export const ProductContextProvider = (props) => {
   const [editingId, setEditingId] = useState(null);
   const [item, setItem] = useState({
     product_name: "",
+    hsn: "",
     rate: "",
     unit: "",
     wps_1to5: "",
     wps_6to8: "",
   });
+  console.log("item", item);
 
   const getProductData = async () => {
     try {
@@ -46,6 +48,7 @@ export const ProductContextProvider = (props) => {
     try {
       const res = await axios.post(`${backendURL}/product/add`, {
         product_name: item.product_name,
+        hsn: item.hsn,
         rate: item.rate,
         unit: item.unit,
         wps_1to5: item.wps_1to5,
@@ -63,7 +66,6 @@ export const ProductContextProvider = (props) => {
   };
   const editProduct = async () => {
     try {
-
       const res = await axios.put(`${backendURL}/product/edit`, {
         prod_id: item.prod_id,
         rate: item.rate,
@@ -85,7 +87,7 @@ export const ProductContextProvider = (props) => {
 
   const handleEdit = async (prod_id, rate, unit, wps_1to5, wps_6to8) => {
     if (editingId !== prod_id) {
-       setEditingId(prod_id);
+      setEditingId(prod_id);
       setItem({
         prod_id: prod_id,
         product_name: "",
@@ -95,7 +97,6 @@ export const ProductContextProvider = (props) => {
         wps_6to8: wps_6to8,
       });
     } else {
-
       const result = await editProduct();
 
       if (!result.success) {
@@ -106,6 +107,7 @@ export const ProductContextProvider = (props) => {
       setEditingId(null);
       setItem({
         product_name: "",
+        hsn: "",
         rate: "",
         unit: "",
         wps_1to5: "",

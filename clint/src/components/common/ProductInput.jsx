@@ -9,19 +9,13 @@ import { useProduct } from "../../context/ProductContext.jsx";
 import { toast } from "react-toastify";
 
 const ProductInput = () => {
-  const {
-    item,
-    setItem,
-    addProduct,
-    editingId,
-    setEditingId,
-    editProduct
-  } = useProduct();
+  const { item, setItem, addProduct, editingId, setEditingId, editProduct } =
+    useProduct();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (editingId) {
-       const result = await editProduct();
+      const result = await editProduct();
 
       if (!result.success) {
         toast.error(result.message);
@@ -31,6 +25,7 @@ const ProductInput = () => {
       setEditingId(null);
       setItem({
         product_name: "",
+        hsn: "",
         rate: "",
         unit: "",
         wps_1to5: "",
@@ -45,6 +40,7 @@ const ProductInput = () => {
       }
       setItem({
         product_name: "",
+        hsn: "",
         rate: "",
         unit: "",
         wps_1to5: "",
@@ -54,18 +50,29 @@ const ProductInput = () => {
   };
   return (
     <form onSubmit={handleSubmit} className="">
-      <div className="flex gap-5 p-2">
+      <div className="flex gap-5  p-2">
         <input
           onChange={(e) => setItem({ ...item, product_name: e.target.value })}
           value={item.product_name}
-          className={`border rounded-md w-64 px-2 ${editingId ? "hidden" : ""}`}
+          className={`border h-10 rounded-md w-64 px-2 ${
+            editingId ? "hidden" : ""
+          }`}
           type="text"
           placeholder="Product name"
         />
         <input
+          onChange={(e) => setItem({ ...item, hsn: e.target.value })}
+          value={item.hsn}
+          className={`border h-10 rounded-md w-24 px-2 ${
+            editingId ? "hidden" : ""
+          }`}
+          type="number"
+          placeholder="Hsn"
+        />
+        <input
           onChange={(e) => setItem({ ...item, rate: e.target.value })}
           value={item.rate}
-          className=" border rounded-md w-24 px-2"
+          className=" border  h-10 rounded-md w-24 px-2"
           type="number"
           placeholder="Price"
         />
@@ -73,7 +80,7 @@ const ProductInput = () => {
           value={item.unit}
           onValueChange={(value) => setItem({ ...item, unit: value })}
         >
-          <SelectTrigger className="w-24 ">
+          <SelectTrigger className="w-24 h-10">
             <SelectValue placeholder="Units" />
           </SelectTrigger>
           <SelectContent>
@@ -81,20 +88,22 @@ const ProductInput = () => {
             <SelectItem value="ltr">ltr</SelectItem>
           </SelectContent>
         </Select>
-        <input
-          onChange={(e) => setItem({ ...item, wps_1to5: e.target.value })}
-          value={item.wps_1to5}
-          className=" border rounded-md w-42 px-2"
-          type="number"
-          placeholder="WPS in gms(1to5)"
-        />
-        <input
-          onChange={(e) => setItem({ ...item, wps_6to8: e.target.value })}
-          value={item.wps_6to8}
-          className=" border rounded-md w-42 px-2"
-          type="number"
-          placeholder="WPS in gms(6to8)"
-        />
+        <div className="flex flex-col gap-2">
+          <input
+            onChange={(e) => setItem({ ...item, wps_1to5: e.target.value })}
+            value={item.wps_1to5}
+            className=" border h-10 rounded-md w-42 px-2"
+            type="number"
+            placeholder="WPS in gms(1to5)"
+          />
+          <input
+            onChange={(e) => setItem({ ...item, wps_6to8: e.target.value })}
+            value={item.wps_6to8}
+            className=" border h-10 rounded-md w-42 px-2"
+            type="number"
+            placeholder="WPS in gms(6to8)"
+          />
+        </div>
       </div>
       <div className="flex items-center justify-start my-8 gap-x-5">
         <button
@@ -107,9 +116,10 @@ const ProductInput = () => {
           type="button"
           onClick={(e) => {
             e.preventDefault();
-            setEditingId(null)
+            setEditingId(null);
             setItem({
               product_name: "",
+              hsn: "",
               rate: "",
               unit: "",
               wps_1to5: "",
