@@ -78,13 +78,10 @@ const editMonthlyRecord = async (req, res) => {
   }
 };
 
-
-
-
-
 const getBillRecordFromDb = async ({ id, month, year }) => {
   const billRecord = {
     id: "",
+    school_id: "",
     school: "",
     month: "",
     year: "",
@@ -116,6 +113,7 @@ const getBillRecordFromDb = async ({ id, month, year }) => {
   const monthly = rows1[0];
 
   billRecord.id = monthly.id;
+  billRecord.school_id = +id;
   billRecord.school = monthly.school;
   billRecord.month = monthly.month;
   billRecord.year = monthly.year;
@@ -151,7 +149,7 @@ const getBillRecordFromDb = async ({ id, month, year }) => {
   return billRecord;
 };
 
- const previewMonthlyRecord = async (req, res) => {
+const previewMonthlyRecord = async (req, res) => {
   try {
     const { id, month, year } = req.params;
 
@@ -181,10 +179,6 @@ const getBillRecordFromDb = async ({ id, month, year }) => {
     });
   }
 };
-
-
-
-
 
 const previewMonthlyRecordPdf = async (req, res) => {
   try {
@@ -239,11 +233,10 @@ const previewMonthlyRecordPdf = async (req, res) => {
   }
 };
 
-
 export {
   getMonthlyRecord,
   addMonthlyRecord,
   editMonthlyRecord,
   previewMonthlyRecord,
-  previewMonthlyRecordPdf
+  previewMonthlyRecordPdf,
 };
