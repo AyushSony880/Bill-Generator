@@ -132,6 +132,7 @@ const getBillRecordFromDb = async ({ id, month, year }) => {
 
     const billItem = {
       product_name: product.product_name,
+      hsn:product.hsn,
       unit: product.unit,
       rate: product.rate,
       total_weight_1to5: total_weight_1to5.toFixed(2),

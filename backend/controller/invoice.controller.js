@@ -22,7 +22,7 @@ export const buildInvoiceHtml = (billRecord) => {
         <tr>
           <td>${idx + 1}</td>
           <td>${item.product_name}</td>
-          <td>4258</td>
+          <td>${item.hsn}</td>
           <td>${item.total_weight} ${item.unit}</td>
           <td>${Number(item.rate).toFixed(2)}</td>
           <td>${item.unit}</td>
