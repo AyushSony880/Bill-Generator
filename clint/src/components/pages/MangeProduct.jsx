@@ -13,7 +13,7 @@ const MangeProduct = () => {
       <section className="p-5 border-t-2">
         {Array.isArray(product) && product.length > 0 ? (
           product.map(
-            ({
+            ({hsn,
               prod_id,
               rate,
               unit,
@@ -24,6 +24,7 @@ const MangeProduct = () => {
               product_name,
             }) => (
               <Item
+                hsn={hsn}
                 prod_id={prod_id}
                 key={prod_id}
                 rate={rate}

@@ -3,6 +3,7 @@ import { useRecord } from "../../context/RecordContext.jsx";
 
 const Invoice = ({ billRecord }) => {
   const {
+    hsn,
     school_id,
     id,
     school,
@@ -26,7 +27,7 @@ const Invoice = ({ billRecord }) => {
       month,
     });
   }, [id]);
-  console.log("school_id", pdf);
+  console.log("school_id", billRecord);
 
   return (
     <div className="w-[700px]  mx-auto bg-white text-[10px] leading-tight p-4 border border-black">
@@ -137,7 +138,7 @@ const Invoice = ({ billRecord }) => {
                 {item.product_name}
               </td>
               <td className="border border-black px-1 py-1 text-center">
-                {"4258"}
+                {item.hsn||"4258"}
               </td>
               <td className="border border-black px-1 py-1 text-center">
                 {item.total_weight?.toFixed

@@ -10,21 +10,23 @@ const Item = ({
   pps_1to5,
   pps_6to8,
   name,
+  hsn
 }) => {
   const { removeProduct,handleEdit,editingId,setEditingId } =
     useProduct();
   
   return (
     <div className="flex items-center justify-start gap-2 mb-2 ">
-      <div className="border-2 flex items-center  gap-10 px-5 py-2 rounded-md min-w-2xl  mr-5">
-        <h3 className="font-semibold w-3xs">
+      <div className="border-2 flex items-center  gap-0 px-5 py-2 rounded-md min-w-2xl  mr-5">
+        <h3 className="font-semibold w-52">
           {name}{" "}
           <samp className="font-normal text-slate-500">
-            ({rate}/{unit})
+            ({rate}/{unit}) 
           </samp>
         </h3>
         <div className="flex items-center justify-center gap-x-10">
           {" "}
+          <p className="text-slate-500">HSN-{hsn}</p>
           <div>
             <p className="font-normal text-slate-500">
               WPS (1to5) - {wps_1to5}
